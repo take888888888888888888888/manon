@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manon</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/42856e4182.js" crossorigin="anonymous"></script>
+    
+</head>
+
+
+
+<header>
+  <h1>Manon</h1>
+    <div class="header-list">
+      <ul>
+        <% if user_signed_in? %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout-button" %>
+        <% else %>
+        <%= link_to "新規登録", new_user_registration_path %>
+        <%= link_to "ログイン", new_user_session_path %>
+        <% end %>
+      </ul>
+    </div>
+</header>
+
+<main>
+  <%= yield %>
+</main>
+
+
+<div class="sidebar-divider"></div>
+<div class="sidebar-divider2"></div>
+
+<footer>
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+</footer>
+
+
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
+        Meiryo, "MS Ｐゴシック", sans-serif;
+    }
+
+    header {
+      background-color: #04527F;
+      height: 80px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed; /* ヘッダーを固定位置に配置 */
+      width: 100%; /* ビューポートの幅に合わせてヘッダーを広げる */
+      top: 0; /* ヘッダーをビューポートの上端に配置 */
+      z-index: 1000;
+    }
+
+    header + * {
+      margin-top: 120px; /* ヘッダーの高さと同じだけの上部の余白を追加 */
+    }
+
+    header a {
+      color: white; 
+      text-decoration: none; 
+    }
+
+
+    header h1 {
+      color: white;
+      margin-left: 20px;
+    }
+
+    .header-list {
+      display: flex;
+      align-items: center;
+    }
+
+    header ul {
+      display: flex;
+    }
+
+    header li {
+      list-style: none;
+      margin-right: 40px;
+    }
+
+    .logout-button {
+      background-color: transparent
+      color: #ffffff; /* ボタンのテキスト色 */
+      border: none; /* ボーダーをなくす */
+      padding: 10px 20px; /* ボタンの内側の余白 */
+      cursor: pointer; /* マウスがボタン上にあるときのカーソルの形状 */
+      text-decoration: none; /* テキストの下線をなくす */
+      font-weight: bolder; 
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 120px;
+        left: 0;
+        height: 100%;
+        flex-direction: column;
+        width: 245px; /* サイドバーの幅を設定 */
+        background-color: #fff; /* サイドバーの背景色を設定 */
+        padding: 0px; /* ボタンの内側の余白を設定 */
+        overflow-y: auto;
+        # border: 1px solid #000;     /* わかりやすくボーダーを引く */
+        # overflow-y: scroll;         /* 縦方向にスクロール可能にする */
+        # top: 300px;
+        # left: 300px;
+        # position: static;
+        # transform: scale(0.8);
+        # border-radius: 20px;
+    }
+
+    .sidebar-button {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        margin-bottom: 10px;
+        text-align: center;
+        border: none;
+        background-color: #fff; /* ボタンの背景色 */
+        font-size: 18px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .sidebar-button:hover {
+        color: #fff; /* マウスオーバー時の文字色 */
+    }
+
+
+    .sidebar-link {
+      color: black; /* リンクの文字色を黒にする */
+    }
+
+    .content {
+        margin-left: 340px; /* サイドバーの幅 + 余白分を設定 */
+        overflow-y: auto;
+    }
+
+    .sidebar-divider {
+        position: fixed;
+        top: 110px; /* サイドバーの上に110px分下の方から描く */
+        left: 245px; /* サイドバーの幅 */
+        height: calc(100% - 110px); /* サイドバーの上から110px分下の高さ */
+        width: 5px; /* 線の幅 */
+        background-color: #04527F; /* 線の色 */
+    }
+
+    .sidebar-divider2 {
+        position: fixed;
+        top: 112px; /* サイドバーの上に110px分下の方から描く */
+        left: 250px; /* サイドバーの幅 */
+        height: calc(100% - 110px); /* サイドバーの上から110px分下の高さ */
+        width: 10px; /* 線の幅 */
+        background-color: #D8D6D6; /* 線の色 */
+    }
+
+    a {
+        text-decoration: none; /* 下線をなくす */
+        # color: black; /* 文字色を黒にする */
+    }
+
+    footer {
+      color: white;
+      height: 20px;
+      background-color: #000;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      justify-content: flex-end;
+    }
+
+</style>
+</html>
+
+
+

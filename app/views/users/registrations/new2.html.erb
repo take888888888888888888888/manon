@@ -1,0 +1,23 @@
+
+
+        <h2>新規登録があと少しで完了するよ</h2>
+
+        <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        </div>
+
+        <div class="field">
+        <%= f.label :大学 %><br />
+        <%= f.text_field :university, autofocus: true, autocomplete: "university" %>
+        </div>
+
+        <div class="actions">
+            <%= f.submit "登録する" %>
+        </div>
+        <% end %>
+
+        <%= render "users/shared/links" %>
+
+
+

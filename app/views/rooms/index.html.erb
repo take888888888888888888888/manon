@@ -1,0 +1,135 @@
+<div class="sidebar-wrapper" style="overflow-y: auto; max-height: calc(100vh - 20px);">
+  <div class="sidebar">
+        <% if current_user.id == @user.id %>
+            <div style="display: flex; align-items: center; position: relative;">
+                <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+                <div style="margin-left: 9px; color: black; font-size: 25px; font-weight: 600; font-family: Arial;">
+                  <%= @user.name %>
+                </div>
+                <%= link_to edit_user_registration_path do %>
+                  <i class="fa-solid fa-gear" style="color: #04527F; position: absolute; left: 214px; top: 30px;"></i>
+                <% end %>
+            </div>
+        <% end %>
+
+          <button class="sidebar-button" style="margin-top: 10px; ">
+            <div style="position: relative; ">
+              <a href="/tweets/new" style=" color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600; position: relative; z-index: 1; ">マイページ</a>
+              <i class="fa-solid fa-house" style="color: #04527F; position: absolute; top: 16px; left: 20px; z-index: 2; font-size: 25px;"></i>
+            </div>
+          </button>
+        
+        <button class="sidebar-button" style="margin-top: -25px;">
+            <div style="position: relative;">
+              <a href="/rooms" style="background-color: #BADDF0; color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600;">ルーム一覧</a>
+              <i class="fa-solid fa-users" style="color: #04527F; position: absolute; top: 17px; left: 20px; z-index: 2; font-size: 25px;"></i>
+              <i class="fa-solid fa-caret-down" style="color: #04527F; position: absolute; top: 17px; left: 173px; z-index: 2; font-size: 20px;"></i>
+              <%= link_to rooms_research_path do %>
+              <i class="fa-fw a-solid fa-plus" style="color: #04527F; position: absolute; top: 5px; left: 194px; z-index: 2; font-size: 40px;"></i>
+              <% end %>
+            </div>
+        </button>
+          
+          
+        <div class="room-item" style="margin-bottom: 150px; ">
+          <ul>
+            <% @rooms.each do |room| %>
+                <li>
+                <%= link_to room_path(room), style: "font-size: 15px; color: #04527F; padding: 14px 14px 14px 0px; display: inline-block; width: 180px; font-weight: 600; margin-left: 40px; " do %>
+                  <span style="color: black;">【<%= room.roomname %>】</span> _ <%= room.teacher&.teacher || '未設定' %> _ <%= room.day_of_week %><%= room.period %>
+                <% end %>          
+                </li>
+            <% end %>
+          </ul>
+        </div>
+  </div>
+</div>
+
+
+
+<div class="content" style="margin-bottom: 40px; margin-top: 40px; ">
+  <h1 margin-left: -20pxx; >ルーム一覧</h1>
+  <%= link_to rooms_research_path do %>
+    <i class="fa-fw a-solid fa-plus" style="color: #04527F; position: absolute; font-size: 40px; margin-left: 160px;  margin-top: -60px; "></i>
+  <% end %>
+  <ul>
+    <% @rooms.each do |room| %>
+      <li>
+        <%= link_to room_path(room), style: "margin-top: 15px; margin-left: 40px;  font-size: 23px; color: #04527F; padding: 14px 14px 14px 0px; display: inline-block; width: 1000px; font-weight: 600; " do %>
+        <span style="color: black;"><%= room.day_of_week %><%= room.period %></span> ： <span style="color: black;"><%= room.roomname %></span> _ <%= room.teacher&.teacher || '未設定' %>
+        <% end %>          
+      </li>
+
+    <% end %>
+  </ul>
+</div>
+
+
+
+
+<style>
+ * {
+    margin: 0;
+    padding: 0;
+  }
+body {
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
+    Meiryo, "MS Ｐゴシック", sans-serif;
+}
+.header {
+  background-color: #04527F;
+  height: 80px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header a {
+  color: white; 
+  text-decoration: none; 
+}
+.header h1 {
+  color: white;
+  margin-left: 20px;
+}
+.header-list {
+  display: flex;
+  align-items: center;
+}
+.header ul {
+  display: flex;
+}
+.header li {
+  list-style: none;
+  margin-right: 40px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 30;
+    left: 0;
+    height: 100%;
+    width: 200px; /* サイドバーの幅を設定 */
+    background-color: #fff; /* サイドバーの背景色を設定 */
+    padding: 20px; /* ボタンの内側の余白を設定 */
+}
+
+.sidebar-button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    text-align: center;
+    border: none;
+    background-color: #fff; /* ボタンの背景色 */
+    color: #000000; /* ボタンの文字色 */
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.content {
+    margin-left: 280px; /* サイドバーの幅 + 余白分を設定 */
+}
+
+</style>

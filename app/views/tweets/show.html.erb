@@ -1,0 +1,254 @@
+
+
+<div class="sidebar-wrapper" style="overflow-y: auto; max-height: calc(100vh - 20px);">
+  <div class="sidebar">
+        <% if current_user.id == @user.id %>
+            <div style="display: flex; align-items: center; position: relative;">
+                <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+                <div style="margin-left: 9px; color: black; font-size: 25px; font-weight: 600; font-family: Arial;">
+                  <%= @user.name %>
+                </div>
+                <%= link_to edit_user_registration_path do %>
+                  <i class="fa-solid fa-gear" style="color: #04527F; position: absolute; left: 214px; top: 30px;"></i>
+                <% end %>
+            </div>
+        <% end %>
+
+          <button class="sidebar-button" style="margin-top: 10px; ">
+            <div style="position: relative; ">
+              <a href="/tweets/new" style="background-color: #BADDF0; color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600; position: relative; z-index: 1; ">マイページ</a>
+              <i class="fa-solid fa-house" style="color: #04527F; position: absolute; top: 16px; left: 20px; z-index: 2; font-size: 25px;"></i>
+            </div>
+          </button>
+        
+        <button class="sidebar-button" style="margin-top: -25px;">
+            <div style="position: relative;">
+              <a href="/rooms" style="color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600;">ルーム一覧</a>
+              <i class="fa-solid fa-users" style="color: #04527F; position: absolute; top: 17px; left: 20px; z-index: 2; font-size: 25px;"></i>
+              <i class="fa-solid fa-caret-down" style="color: #04527F; position: absolute; top: 17px; left: 173px; z-index: 2; font-size: 20px;"></i>
+              <%= link_to rooms_research_path do %>
+              <i class="fa-fw a-solid fa-plus" style="color: #04527F; position: absolute; top: 5px; left: 194px; z-index: 2; font-size: 40px;"></i>
+              <% end %>
+            </div>
+        </button>
+          
+          
+        <ul>
+          <% @rooms.each do |room| %>
+            <li>
+            <%= link_to room_path(room), style: "font-size: 15px; color: #04527F; padding: 14px 14px 14px 0px; display: inline-block; width: 180px; font-weight: 600; margin-left: 40px; " do %>
+              <span style="color: black;">【<%= room.roomname %>】</span> _ <%= room.teacher&.teacher || '未設定' %> _ <%= room.day_of_week %><%= room.period %>
+            <% end %>          
+            </li>
+          <% end %>
+        </ul>
+  </div>
+</div>
+
+
+
+<div class="content">
+  <div class="tweets-container">
+      <div class="tweet" style=" position: relative;">
+        <div class="icon" style=" position: absolute; top: 6px; left: 0; padding: 20px;">
+            <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+        </div>
+        <p style=" font-weight: 600; margin-left: 20px; padding: 35px; font-size: 18px; margin-top: 26px;"><%= @tweet.body %></p>
+        <div class="upper-buttons" style=" position: absolute; top: 8px; right: 0; padding: 12px; display: flex; ">
+          <% if user_signed_in? %>
+            <% if current_user.already_agreed?(@tweet) %>
+                  <%= button_to tweet_agree_path(id: @tweet.id, tweet_id: @tweet.id), method: :delete, class: "custom-button" do %>
+                    <i class="fa-solid fa-heart fa-xl"></i>
+                    <%= @tweet.agrees.count %>
+                  <% end %>
+              <% else %>
+                  <%= button_to tweet_agrees_path(id: @tweet.id, tweet_id: @tweet.id), method: :post, class: "custom-button2" do %>
+                    <i class="fa-solid fa-heart fa-xl"></i>
+                    <%= @tweet.agrees.count %>
+                  <% end %>
+            <% end %>
+            <% if current_user.already_resolved?(@tweet) %>
+                  <%= button_to tweet_resolve_path(id: @tweet.id, tweet_id: @tweet.id), method: :delete, class: "custom-button" do %>
+                    <i class="fa-regular fa-circle-check" style="font-size: 20px; vertical-align: middle;"></i>
+                    <%= content_tag(:span, @tweet.resolves.count, style: "vertical-align: middle;") %>
+                  <% end %>
+              <% else %>
+                  <%= button_to tweet_resolves_path(id: @tweet.id, tweet_id: @tweet.id), method: :post, class: "custom-button2" do %>
+                    <i class="fa-regular fa-circle-check" style="font-size: 20px; vertical-align: middle;"></i>
+                    <%= content_tag(:span, @tweet.resolves.count, style: "vertical-align: middle;") %>
+                  <% end %>
+            <% end %>
+            <%= button_to tweet_path(@tweet.id), method: :get, class: "custom-button" do %>
+              <i class="fa-regular fa-comment fa-xl"></i>
+              <%= @tweet.comments.count %>
+            <% end %>
+          <% end %>
+        </div>
+        <% if not current_user.already_resolved?(@tweet) %>
+          <div class="unresolved-badge">
+            <p class="unresolved-text" style="font-size: 10px; font-weight: bolder; "></p>
+          </div>
+        <% end %>
+        <div class="down-buttons" style=" position: absolute; margin-top: -30px; right: 0; padding: 12px; display: flex; ">
+          <div class="roomname" style=" font-size: 17px; font-weight: bolder; margin-right: 6px; ">
+          <span><%= @tweet.room.roomname %></span>
+          </div>
+          <%= button_to room_path(@tweet.room), method: :get, class: "custom-button3" do %>
+            <i class="fa-solid fa-arrow-right-to-bracket fa-flip-horizontal" style="font-size: 20px;"></i>
+          <% end %>                    
+        <% if current_user == @tweet.user %>
+          <%= button_to edit_tweet_path(@tweet.id), method: :get, class: "custom-button3" do %>
+            <i class="fa-solid fa-pen-to-square" style="font-size: 20px;"></i>
+          <% end %>
+          <%= button_to tweet_path(@tweet.id), method: :delete, class: "custom-button3" do %>
+            <i class="fa-solid fa-trash-can" style="font-size: 20px;"></i>
+          <% end %>
+        <% end %>
+        </div>
+      <div class="time" style="color: #A6A6A6; margin-top: -28px; ">
+        <span style="color: #A6A6A6; font-size: 11.5px; display: block; margin-left:832px ">
+          <%= @tweet.created_at.strftime("%m/%d") %>
+        </span>
+        <span style="color: #A6A6A6; font-size: 13px; display: block; margin-left:830px ">
+        <%= @tweet.created_at.strftime("%H:%M") %>
+        </span>
+      </div>
+    </div>
+
+    <h3>コメント覧 (<%= @tweet.comments.count %>)</h3>
+
+
+      <div class="comments-section-wrapper" style="overflow-y: auto; max-height: 400px; margin-top: 20px;">
+        <div class="comments-section" style="width: 780px; margin-left: 90px;">
+          <ul class="comment-list" >
+            <% @comments.each do |c| %>
+              <li class="comment">
+                <div class="icon" style="  padding: 8px; margin-left: -5px; ">
+                  <% if current_user == c.user %>
+                    <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+                  <% else %>
+                    <i class="fa-solid fa-circle-user fa-2xl" style="color: #C4C3C3; margin-left: 15px;"></i>
+                  <% end %>
+                </div>
+                  <div class="comment-content"  style="margin-left: 50px; ">
+                    <%= c.content %>
+                </div>
+                <div class="time" style="color: #A6A6A6; margin-top: -28px;  ">
+                  <span style="color: #A6A6A6; font-size: 11.5px; display: block; margin-left:832px ">
+                    <%= c.created_at.strftime("%m/%d") %>
+                  </span>
+                  <span style="color: #A6A6A6; font-size: 13px; display: block; margin-left:830px ">
+                    <%= c.created_at.strftime("%H:%M") %>
+                  </span>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+
+          <% if user_signed_in? %>
+          <!-- コメント投稿フォーム -->
+            <div class="comment-form" style="margin-left: -580px; display: flex;  position: fixed; bottom: 10px; left: 60%; ">
+              <%= form_with(model: [@tweet, @comment], local: true) do |f| %>
+                <div class="comment" style="display: flex; ">
+                  <div class="field" style="margin-left: 90px; ">
+                    <%= f.hidden_field :room_id, value: @room.id %>
+                    <%= f.text_field :body, size: 130, placeholder: "質問を入力", style: "padding: 12px; white-space: pre-wrap; word-wrap: break-word;" %>
+                  </div>
+                  <div class="submit" style="display: flex; position: relative;">
+                    <%= f.submit "", class: "custom-submit-button", style: "position: relative; z-index: 1;" %>
+                    <i class="fa-solid fa-arrow-up" style="position: absolute; top: 0; right: 0; z-index: 2; color: white; margin-right: 13px; margin-top: 13px; font-size: 19px; "></i>
+                  </div> 
+                </div>
+              <% end %>          
+            </div>
+          <% end %>
+      </div>
+  </div>
+</div>
+
+
+<style>
+
+  .tweet {
+    border: 3px solid black; /* 枠線の色と太さ */
+    border-radius: 13px;
+    padding: 10px; /* ツイート内容と枠線の間の余白 */
+    margin-bottom: 20px; /* ツイート間の間隔 */
+    width: 800px; /* 幅を指定 */
+    margin-left: 90px;
+  }
+
+  .custom-button {
+    background-color: #FFFFFF;
+    color: #04527F;
+    border-radius: 15px; /* 楕円形に */
+    height: 28px; 
+    border: 2.2px solid #04527F; 
+    width: 55px;
+  }
+
+  .custom-button2 {
+    background-color: #FFFFFF;
+    color: #BDBBBB;
+    border-radius: 15px; /* 楕円形に */
+    height: 28px; 
+    border: 2.2px solid #BDBBBB;
+    width: 55px;
+  }
+
+  .custom-button3 {
+    background-color: transparent;
+    color: #04527F;
+    height: 24px; 
+    border: 2px solid transparent; 
+    width: 24px;
+  }
+
+  .comments-section {
+    margin-top: 40px;
+  }
+  
+  .comment-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 80px;
+  }
+  
+  .comment {
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+  }
+  
+  .comment-content {
+    font-size: 16px;
+    word-wrap: break-word; /* または overflow-wrap: break-word; */
+  }
+  
+  .custom-submit-button {
+    background-color: #04527F; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border: none; /* ボーダーをなしにする */
+    padding: 10px 20px; /* パディング */
+    border-radius: 5px; /* 角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+    font-size: 16px; /* フォントサイズ */
+    margin-left: 10px;
+  }
+
+  
+  .comment-form textarea {
+    width: 100%;
+    padding: 18px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 900px;
+  }
+
+
+  .content {
+    margin-left: 280px; /* サイドバーの幅 + 余白分を設定 */
+    margin-bottom: 50px;
+  }
+
+</style>

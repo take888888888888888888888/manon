@@ -1,0 +1,61 @@
+
+<div class="content">
+    <%= link_to "マイページへ", :back %>
+    <h2>プロフィールを編集</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="field">
+      <%= f.label :大学 %><br />
+      <%= f.text_field :university, autofocus: true, autocomplete: "university" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :メールアドレス %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "メールアドレス" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+    <br />
+    <br />
+    <h3>パスワード変更</h3>
+      <div class="field">
+      <%= f.label :current_password %> パスワードを変更するには、現在のパスワードを入力する必要があります<br />
+      <%= f.password_field :current_password, autocomplete: "current-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %> パスワードを変更しない場合は、空欄<br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %>新しいパスワードを確認するため、もう一度入力してください<br />
+        <%= f.password_field :password_confirmation, autocomplete: "新しいパスワード" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "更新する" %>
+      </div>
+    <% end %>
+
+
+    <br />
+    <br />
+    <h3>アカウント削除</h3>
+    <div><%= button_to "このアカウントを削除する", registration_path(resource_name), data: { confirm: "本当にアカウントを削除しますか?", turbo_confirm: "本当にアカウントを削除しますか?" }, method: :delete %></div>
+
+</div>

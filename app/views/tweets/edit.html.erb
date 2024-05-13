@@ -1,0 +1,53 @@
+<div class="sidebar-wrapper" style="overflow-y: auto; max-height: calc(100vh - 20px);">
+  <div class="sidebar">
+        <% if current_user.id == @user.id %>
+            <div style="display: flex; align-items: center; position: relative;">
+                <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+                <div style="margin-left: 9px; color: black; font-size: 25px; font-weight: 600; font-family: Arial;">
+                  <%= @user.name %>
+                </div>
+                <%= link_to edit_user_registration_path do %>
+                  <i class="fa-solid fa-gear" style="color: #04527F; position: absolute; left: 214px; top: 30px;"></i>
+                <% end %>
+            </div>
+        <% end %>
+
+          <button class="sidebar-button" style="margin-top: 10px; ">
+            <div style="position: relative; ">
+              <a href="/tweets/new" style="background-color: #BADDF0; color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600; position: relative; z-index: 1; ">マイページ</a>
+              <i class="fa-solid fa-house" style="color: #04527F; position: absolute; top: 16px; left: 20px; z-index: 2; font-size: 25px;"></i>
+            </div>
+          </button>
+        
+        <button class="sidebar-button" style="margin-top: -25px;">
+            <div style="position: relative;">
+              <a href="/rooms" style="color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600;">ルーム一覧</a>
+              <i class="fa-solid fa-users" style="color: #04527F; position: absolute; top: 17px; left: 20px; z-index: 2; font-size: 25px;"></i>
+              <i class="fa-solid fa-caret-down" style="color: #04527F; position: absolute; top: 17px; left: 173px; z-index: 2; font-size: 20px;"></i>
+              <%= link_to rooms_research_path do %>
+              <i class="fa-fw a-solid fa-plus" style="color: #04527F; position: absolute; top: 5px; left: 194px; z-index: 2; font-size: 40px;"></i>
+              <% end %>
+            </div>
+        </button>
+          
+          
+        <ul>
+          <% @rooms.each do |room| %>
+            <li>
+            <%= link_to room_path(room), style: "font-size: 15px; color: #04527F; padding: 14px 14px 14px 0px; display: inline-block; width: 180px; font-weight: 600; margin-left: 40px; " do %>
+              <span style="color: black;">【<%= room.roomname %>】</span> _ <%= room.teacher&.teacher || '未設定' %> _ <%= room.day_of_week %><%= room.period %>
+            <% end %>          
+            </li>
+          <% end %>
+        </ul>
+  </div>
+</div>
+
+
+
+<div class="content">
+<%= form_for @tweet do |f| %>
+    <%= f.text_field :body, :size => 140 %> 
+    <%= button_to "編集" , action: "update", controller: "tweets" %>
+  <% end %>
+</div>
