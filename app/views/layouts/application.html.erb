@@ -1,41 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manon</title>
+    <title>質問攻メモ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/42856e4182.js" crossorigin="anonymous"></script>
-    
 </head>
 
-
-
-<header>
-  <h1>Manon</h1>
-    <div class="header-list">
-      <ul>
-        <% if user_signed_in? %>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout-button" %>
-        <% else %>
-        <%= link_to "新規登録", new_user_registration_path %>
-        <%= link_to "ログイン", new_user_session_path %>
-        <% end %>
-      </ul>
-    </div>
-</header>
 
 <main>
   <%= yield %>
 </main>
 
 
-<div class="sidebar-divider"></div>
-<div class="sidebar-divider2"></div>
-
-<footer>
-    <p>Copyright © GeekSalon All Rights Reserved.</p>
-</footer>
 
 
 <style>
@@ -43,6 +21,7 @@
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
         Meiryo, "MS Ｐゴシック", sans-serif;
@@ -95,7 +74,6 @@
       color: #ffffff; /* ボタンのテキスト色 */
       border: none; /* ボーダーをなくす */
       padding: 10px 20px; /* ボタンの内側の余白 */
-      cursor: pointer; /* マウスがボタン上にあるときのカーソルの形状 */
       text-decoration: none; /* テキストの下線をなくす */
       font-weight: bolder; 
     }
@@ -110,13 +88,6 @@
         background-color: #fff; /* サイドバーの背景色を設定 */
         padding: 0px; /* ボタンの内側の余白を設定 */
         overflow-y: auto;
-        # border: 1px solid #000;     /* わかりやすくボーダーを引く */
-        # overflow-y: scroll;         /* 縦方向にスクロール可能にする */
-        # top: 300px;
-        # left: 300px;
-        # position: static;
-        # transform: scale(0.8);
-        # border-radius: 20px;
     }
 
     .sidebar-button {
@@ -130,10 +101,6 @@
         font-size: 18px;
         text-decoration: none;
         cursor: pointer;
-    }
-
-    .sidebar-button:hover {
-        color: #fff; /* マウスオーバー時の文字色 */
     }
 
 
@@ -166,7 +133,6 @@
 
     a {
         text-decoration: none; /* 下線をなくす */
-        # color: black; /* 文字色を黒にする */
     }
 
     footer {

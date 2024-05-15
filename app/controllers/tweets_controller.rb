@@ -135,6 +135,7 @@ end
         @tweet = Tweet.find(params[:id])
         session[:previous_url] = request.referer
         @rooms = Room.includes(:teacher).where(id: current_user.user_rooms.pluck(:room_id)).order(updated_at: :desc)
+        @user = current_user 
     end
 
     def destroy

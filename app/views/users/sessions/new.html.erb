@@ -1,29 +1,134 @@
-<h2>ログイン</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :メールアドレス %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :パスワード %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :次回から省略する %>
+<body>
+    <div class="left-section">
+        <p style="font-size: 110px; font-weight: 900; color: white; margin-left:140px;  margin-top:230px; ">質問攻メモ</p>
+        <div class="concept-container">
+            <p class="concept-text large">"？？？→！！！"</p>
+            <p class="concept-text">質問攻めしてゾーンに入れ！</p>
+        </div>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "ログイン" %>
-  </div>
-<% end %>
+    <div class="right-section" style="display: flex; flex-direction: column; margin-top:250px;" >
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field custom-field">
+              <%= f.label :メールアドレス, class: "custom-label" %><br />
+              <%= f.email_field :email, class: "custom-input", autofocus: true, autocomplete: "email" %>
+            </div>
+            
+            <div class="field custom-field">
+              <%= f.label :パスワード, class: "custom-label" %><br />
+              <%= f.password_field :password, class: "custom-input", autocomplete: "current-password" %>
+            </div>
+            
+            <% if devise_mapping.rememberable? %>
+              <div class="field">
+                <%= f.check_box :remember_me, class: "custom-checkbox" %>
+                <%= f.label :パスワードを保存する, class: "custom-label2" %>
+              </div>
+            <% end %>
+          
+            <div class="actions">
+                  <%= f.submit "ログイン", class: "custom-submit-button" %>
+            </div>
+        <% end %>
+
+            <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name) %>
+            <%= render "users/shared/links" %>
+
+        <%= link_to "新規登録", new_registration_path(resource_name) %><br />
+      </body>
+
+    </div>
 
 
+<style>
+
+a {
+  color: #04527F;
+  margin-left:120px;
+}
+
+.left-section {
+  display: block;
+  background-color: #04527F; /* 左側の背景色を #04527F に設定 */
+  width: 60%; /* 左側の幅を60%に設定 */
+  float: left; /* 左側の要素を左に寄せる */
+  height: 100vh; /* ページの高さいっぱいに設定 */
+}
+
+.right-section {
+  width: 40%; /* 右側の幅を40%に設定 */
+  float: left; /* 右側の要素を左に寄せる */
+  height: 100vh; /* ページの高さいっぱいに設定 */
+}
 
 
-<%= render "users/shared/links" %>
+.concept-container {
+  background-color: #04527F; /* 共通の背景色を追加 */
+  padding: 20px; /* コンテナ内の余白を追加 */
+  border-radius: 10px; /* 角を丸める */
+  text-align: center; /* テキストを中央揃え */
+  margin: 40px 10px 0 10px; /* 上下左右のマージンを設定 */
+  max-width: 800px; /* 最大幅を設定 */
+}
+
+.concept-text {
+  font-weight: 900;
+  color: white;
+  margin: 5px 0; /* 各段落の上下マージンを設定 */
+}
+
+.concept-text.large {
+  font-size: 50px; /* 大きいサイズのフォント */
+}
+
+.concept-text:not(.large) {
+  font-size: 47px; /* 通常サイズのフォント */
+  margin-top: 5px; /* 上部のマージンを調整 */
+}
+
+.custom-label {
+  color: #04527F; /* ラベルの文字色を#04527Fに設定 */
+  font-weight:600;
+  margin-left:120px;
+}
+
+.custom-label2 {
+  color: #04527F; /* ラベルの文字色を#04527Fに設定 */
+  font-weight:600;
+  margin-left:0px;
+}
+
+.custom-input {
+  border: 2.4px solid #04527F; /* 枠の色を#04527Fに設定 */
+  padding: 10px; /* 適当な内側の余白を追加 */
+  width: 300px;
+  font-color: #04527F;
+  font-size:17px;
+  margin-left:120px;
+}
+
+.custom-checkbox {
+  accent-color: #04527F; /* チェックボックスのアクセントカラーを#04527Fに設定 */
+  margin-left:120px;
+}
+
+.custom-field {
+  margin-top: 20px; /* フィールド間のスペースを追加 */
+  margin-bottom: 10px; 
+}
+
+.custom-submit-button {
+  background-color: #05A8B9; /* ボタンの背景色 */
+  color: white; /* ボタンの文字色 */
+  border: none; /* 枠線をなしにする */
+  padding: 10px 20px; /* 内側の余白を設定 */
+  font-size: 16px; /* フォントサイズを設定 */
+  font-weight: bold; /* 文字を太字にする */
+  cursor: pointer; /* カーソルをポインタにする */
+  margin-left: 350px;
+  margin-top: -20px;
+}
+
+</style>
+

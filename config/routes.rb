@@ -22,9 +22,12 @@ Rails.application.routes.draw do
 
   post 'tweets/:id/edit', to: 'tweets#edit', as: 'edit_tweet'
 
+
   devise_for :users
 
-  resources :users, only: [:show, :edit]
+  
+
+  resources :users, only: [:edit]
 
   resources :comments, only: [:create] 
 

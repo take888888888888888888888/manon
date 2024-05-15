@@ -9,4 +9,8 @@ class UsersController < ApplicationController
         redirect_to leave_room_room_path, notice: 'ルームから退会しました。'
     end
 
+    def show
+      
+    end
+
 end

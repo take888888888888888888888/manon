@@ -1,23 +1,73 @@
+<header>
+  <h1 style="margin-left: 40px;">質問攻メモ</h1>
+    <div class="header-list">
+      <ul>
+        <% if user_signed_in? %>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete, style: " font-weight: 600; font-size: 17px; color: white; background-color: transparent; border: none; padding: 0; margin-right: 25px;" %>
+        <% else %>
+        <%= link_to "新規登録", new_user_registration_path, style: "margin-right: 25px; margin-left: -20px;" %>
+        <%= link_to "ログイン", new_user_session_path, style: "margin-right: 25px;" %>
+        <% end %>
+      </ul>
+    </div>
+</header>
+
+<div class="sidebar-wrapper" style="overflow-y: auto; max-height: calc(100vh - 20px);">
+  <div class="sidebar">
+        <% if current_user.id == @user.id %>
+            <div style="display: flex; align-items: center; position: relative;">
+                <i class="fa-solid fa-circle-user fa-2xl" style="color: #3da6d4; margin-left: 15px;"></i>
+                <div style="margin-left: 9px; color: black; font-size: 25px; font-weight: 600; font-family: Arial;">
+                  <%= @user.name %>
+                </div>
+                <%= link_to edit_user_registration_path do %>
+                  <i class="fa-solid fa-gear" style="color: #04527F; position: absolute; left: 214px; top: 30px;"></i>
+                <% end %>
+            </div>
+        <% end %>
+
+          <button class="sidebar-button" style="margin-top: 10px; ">
+            <div style="position: relative; ">
+              <a href="/tweets/new" style="background-color: #BADDF0; color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600; position: relative; z-index: 1; ">マイページ</a>
+              <i class="fa-solid fa-house" style="color: #04527F; position: absolute; top: 16px; left: 20px; z-index: 2; font-size: 25px;"></i>
+            </div>
+          </button>
+        
+        <button class="sidebar-button" style="margin-top: -25px;">
+            <div style="position: relative;">
+              <a href="/rooms" style="color: black; padding: 14px 14px 14px 0px; display: inline-block; width: 230px; font-weight: 600;">ルーム一覧</a>
+              <i class="fa-solid fa-users" style="color: #04527F; position: absolute; top: 17px; left: 20px; z-index: 2; font-size: 25px;"></i>
+              <i class="fa-solid fa-caret-down" style="color: #04527F; position: absolute; top: 17px; left: 173px; z-index: 2; font-size: 20px;"></i>
+              <%= link_to rooms_research_path do %>
+                <i class="fa-fw a-solid fa-plus" style="color: #04527F; position: absolute; top: 5px; left: 194px; z-index: 2; font-size: 40px;"></i>
+              <% end %>
+            </div>
+        </button>
+          
+          
+
+  </div>
+</div>
+
 
 <div class="content">
-    <%= link_to "マイページへ", :back %>
     <h2>プロフィールを編集</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
 
       <div class="field">
-      <%= f.label :name %><br />
+      <%= f.label :ニックネーム %>
       <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
       </div>
 
       <div class="field">
-      <%= f.label :大学 %><br />
+      <%= f.label :大学 %>
       <%= f.text_field :university, autofocus: true, autocomplete: "university" %>
       </div>
 
       <div class="field">
-        <%= f.label :メールアドレス %><br />
+        <%= f.label :メールアドレス %>
         <%= f.email_field :email, autofocus: true, autocomplete: "メールアドレス" %>
       </div>
 
@@ -29,33 +79,214 @@
     <br />
     <h3>パスワード変更</h3>
       <div class="field">
-      <%= f.label :current_password %> パスワードを変更するには、現在のパスワードを入力する必要があります<br />
+      <%= f.label :現在のパスワード %> 
       <%= f.password_field :current_password, autocomplete: "current-password" %>
       </div>
 
       <div class="field">
-        <%= f.label :password %> パスワードを変更しない場合は、空欄<br />
+        <%= f.label :新しいパスワード %> （パスワードを変更しない場合は、無入力）
         <%= f.password_field :password, autocomplete: "new-password" %>
         <% if @minimum_password_length %>
           <br />
-          <em><%= @minimum_password_length %> characters minimum</em>
+          <%= @minimum_password_length %>文字以上の半角英数字
         <% end %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %>新しいパスワードを確認するため、もう一度入力してください<br />
+        <%= f.label :確認用　新しいパスワード %>
         <%= f.password_field :password_confirmation, autocomplete: "新しいパスワード" %>
       </div>
 
       <div class="actions">
-        <%= f.submit "更新する" %>
+        <%= f.submit "更新する", class: "button" %>      
+      <% end %>
       </div>
-    <% end %>
-
 
     <br />
     <br />
     <h3>アカウント削除</h3>
-    <div><%= button_to "このアカウントを削除する", registration_path(resource_name), data: { confirm: "本当にアカウントを削除しますか?", turbo_confirm: "本当にアカウントを削除しますか?" }, method: :delete %></div>
-
+    <%= button_to "このアカウントを削除する", registration_path(resource_name), data: { confirm: "本当にアカウントを削除しますか?", turbo_confirm: "本当にアカウントを削除しますか?" }, method: :delete, class: "button" %>
 </div>
+
+<div class="sidebar-divider"></div>
+<div class="sidebar-divider2"></div>
+
+<footer>
+    <p>Copyright © 2024 Manon _ Kanon Matsumae</p>
+</footer>
+
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
+    Meiryo, "MS Ｐゴシック", sans-serif;
+}
+
+header {
+  background-color: #04527F;
+  height: 80px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* ヘッダーを固定位置に配置 */
+  width: 100%; /* ビューポートの幅に合わせてヘッダーを広げる */
+  top: 0; /* ヘッダーをビューポートの上端に配置 */
+  z-index: 1000;
+}
+
+header + * {
+  margin-top: 120px; /* ヘッダーの高さと同じだけの上部の余白を追加 */
+}
+
+header a {
+  color: white; 
+  text-decoration: none; 
+}
+
+
+header h1 {
+  color: white;
+  margin-left: 20px;
+}
+
+.header-list {
+  display: flex;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+}
+
+header li {
+  list-style: none;
+  margin-right: 40px;
+}
+
+.logout-button {
+  background-color: transparent
+  color: #ffffff; /* ボタンのテキスト色 */
+  border: none; /* ボーダーをなくす */
+  padding: 10px 20px; /* ボタンの内側の余白 */
+  text-decoration: none; /* テキストの下線をなくす */
+  font-weight: bolder; 
+}
+
+.sidebar {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    height: 100%;
+    flex-direction: column;
+    width: 245px; /* サイドバーの幅を設定 */
+    background-color: #fff; /* サイドバーの背景色を設定 */
+    padding: 0px; /* ボタンの内側の余白を設定 */
+    overflow-y: auto;
+}
+
+.sidebar-button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    text-align: center;
+    border: none;
+    background-color: #fff; /* ボタンの背景色 */
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.sidebar-link {
+  color: black; /* リンクの文字色を黒にする */
+}
+
+.content {
+    margin-left: 340px; /* サイドバーの幅 + 余白分を設定 */
+    overflow-y: auto;
+    margin-bottom: 30px;
+}
+
+.field {
+    margin-bottom: 20px;
+  }
+
+  .field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .field input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+
+  .actions input[type="submit"] {
+    background-color: #04527F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+.sidebar-divider {
+    position: fixed;
+    top: 110px; /* サイドバーの上に110px分下の方から描く */
+    left: 245px; /* サイドバーの幅 */
+    height: calc(100% - 110px); /* サイドバーの上から110px分下の高さ */
+    width: 5px; /* 線の幅 */
+    background-color: #04527F; /* 線の色 */
+}
+
+.button {
+  background-color: #04527F;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sidebar-divider2 {
+    position: fixed;
+    top: 112px; /* サイドバーの上に110px分下の方から描く */
+    left: 250px; /* サイドバーの幅 */
+    height: calc(100% - 110px); /* サイドバーの上から110px分下の高さ */
+    width: 10px; /* 線の幅 */
+    background-color: #D8D6D6; /* 線の色 */
+}
+
+a {
+    text-decoration: none; /* 下線をなくす */
+}
+
+footer {
+  color: white;
+  height: 20px;
+  background-color: #000;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  justify-content: flex-end;
+}
+
+</style>

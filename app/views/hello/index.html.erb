@@ -1,5 +1,98 @@
+<body>
+    <div class="left-section">
+    <p style="font-size: 110px; font-weight: 900; color: white; margin-left:140px;  margin-top:230px; ">質問攻メモ</p>
+    <div class="concept-container">
+        <p class="concept-text large">"？？？→！！！"</p>
+        <p class="concept-text">質問攻めしてゾーンに入れ！</p>
+    </div>
+
+    </div>
+    <div class="right-section" style="display: flex; flex-direction: column;" >
+        <%= link_to "ログイン", new_user_session_path, class: "custom-button1" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "custom-button2" %>
+    </div>
+</body>
 
 
-    <%= link_to "ログイン", new_user_session_path , style: "color: white; font-weight: bold; box: "  %>
-    <%= link_to "新規登録", new_user_registration_path %>
 
+
+<style>
+
+.left-section {
+  display: block;
+  background-color: #04527F; /* 左側の背景色を #04527F に設定 */
+  width: 60%; /* 左側の幅を60%に設定 */
+  float: left; /* 左側の要素を左に寄せる */
+  height: 100vh; /* ページの高さいっぱいに設定 */
+}
+
+.right-section {
+  width: 40%; /* 右側の幅を40%に設定 */
+  float: left; /* 右側の要素を左に寄せる */
+  height: 100vh; /* ページの高さいっぱいに設定 */
+}
+
+.custom-button1 {
+  display: inline-block;
+  background-color: #04527F;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 200px;
+  margin-right: 25px;
+  width: 210px; 
+  margin-left: 180px; 
+  margin-bottom: 20px; /* ボタンの下に余白を追加 */
+  margin-top:320px;
+  font-size:22px;
+  text-align: center;
+}
+
+.custom-button2 {
+  display: inline-block;
+  background-color: #04527F;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 200px;
+  margin-right: 25px;
+  width: 210px; 
+  margin-left: 180px; 
+  margin-bottom: 20px; /* ボタンの下に余白を追加 */
+  margin-top:opx;
+  font-size:22px;
+  text-align: center;
+}
+
+.concept-container {
+  background-color: #04527F; /* 共通の背景色を追加 */
+  padding: 20px; /* コンテナ内の余白を追加 */
+  border-radius: 10px; /* 角を丸める */
+  text-align: center; /* テキストを中央揃え */
+  margin: 40px 10px 0 10px; /* 上下左右のマージンを設定 */
+  max-width: 800px; /* 最大幅を設定 */
+}
+
+.concept-text {
+  font-weight: 900;
+  color: white;
+  margin: 5px 0; /* 各段落の上下マージンを設定 */
+}
+
+.concept-text.large {
+  font-size: 50px; /* 大きいサイズのフォント */
+}
+
+.concept-text:not(.large) {
+  font-size: 47px; /* 通常サイズのフォント */
+  margin-top: 5px; /* 上部のマージンを調整 */
+}
+
+
+
+
+</style>
